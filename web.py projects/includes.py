@@ -18,11 +18,15 @@ import tenjin
 from tenjin.helpers import *
 
 # redis session
-import redisSessions
+import redisSession
 
 #config and messages
 config = ConfigParser.SafeConfigParser()
 config.read('config.ini')
+
+if os.name == 'posix':
+    import setproctitle
+    setproctitle.setproctitle('INSERTNAMEHERE')  # grab name from config
 
 web.config.debug = True  # set this to false when deploying (i.e. Master branch commits)
 
@@ -42,13 +46,14 @@ redisServer = redis.StrictRedis()  # fill in details!
 
 #Session stuff
 session = web.session.Session(app,
-                            redisSessions.RedisStore(ip='xxx.xxx.xxx.xxx',  # if you don't know IP addresses, shame on you
+                            redisSession.RedisStore(ip='xxx.xxx.xxx.xxx',  # if you don't know IP addresses, shame on you
                                                     port=1234,  # port has to be integer
                                                     db=1,  # redis database ID, has to be integer
-                                                    initialFlush=False),  # when deploying set initialFlush to true
-                                                    initializer={},  # whatever the fuck you want to initialize
+                                                    initialFlush=False,  # when deploying set initialFlush to true
                                                     format='Default'  # choose 'json' if you want to mess around. 
-                                                    )
+                                                    ),
+                                                    initializer={},  # whatever the fuck you want to initialize
+                            )
 
 # these are the default settings. Think you might want to set this up
 web.config.session_parameters = web.storify({
@@ -69,11 +74,7 @@ web.config.session_parameters = web.storify({
 
 
 # Render Engine (tenjin rhymes with engine):
-render = web.template.render('templates/', globals={
-                                                    'messages': messages,
-                                                    },
-                                cache=False
-                            )  # Templator (slow as hell)
-render = tenjin.Engine(path=['templates'])  # tenjin
+render = web.template.render('templates/', globals={},  cache=False)  # Templator (slow as hell)
+render = tenjin.Engine(path=['templates'])  # tenjin (fast!)
 
 from views import *
