@@ -34,6 +34,7 @@ web.config.debug = True  # set this to false when deploying (i.e. Master branch 
 urls = (
         # static pages get listed first
         '/', 'index',
+        '/static/(.*)', 'static',  # static file handling for geventbased server and if not using any CDNs or subdomains to serve static assets
         )
 
 curdir = os.path.dirname(__file__)
