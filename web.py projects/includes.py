@@ -20,6 +20,9 @@ from tenjin.helpers import *
 # redis session
 import redisSession
 
+# exceptions
+from exceptions import *
+
 #config and messages
 config = ConfigParser.SafeConfigParser()
 config.read('config.ini')
