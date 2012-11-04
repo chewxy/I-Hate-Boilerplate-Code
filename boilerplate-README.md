@@ -54,8 +54,8 @@ The version of ZeroMQ used is 2.2. DO NOT use apt-get. The repository for up to 
 The version of gevent in PyPI is the pre-1.0 version which it uses libevent instead of libev. The version required for A3 is gevent1.0+
 
 1. Install libev4: ` sudo apt-get install libev4 libev-libevent-dev `
-2. Download the latest version of gevent (gevent-1.0b2): ` wget http://gevent.googlecode.com/files/gevent-1.0b2.tar.gz `
-3. Untar it: `tar -xzvf gevent-1.0b2.tar.gz gevent`
+2. Download the latest version of gevent (gevent-1.0b2): ` wget https://github.com/downloads/SiteSupport/gevent/gevent-1.0rc1.tar.gz `
+3. Untar it: `tar -xzvf gevent-1.0rc1.tar.gz`
 4. Go to the untar'd directory, then make: `python setup.py build`
 5. Install it (sudo may be required): `python setup.py install`
 
